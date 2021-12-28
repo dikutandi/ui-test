@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.polygon {
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, 77% 100%, 0% 100%);
+    -moz-clip-path: polygon(0% 0%, 100% 0%, 77% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 100% 0%, 77% 100%, 0% 100%)
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+        integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body class="bg-gray-200">
+    <div class="flex justify-center items-center w-full mt-6">
+        <h3 class="font-semibold mb-2 text-2xl text-green-500 leading-tight sm:leading-normal">LEADERBOARD</h3>
+    </div>
+    <div class="flex justify-center items-center w-full">
+        <div x-data="setup()" class="md:w-1/2 w-full px-4">
+            <ul class="flex justify-center items-center my-4">
+                <template x-for="(tab, index) in tabs" :key="index">
+                    <li class="cursor-pointer py-2 px-4 text-gray-500 border-b-8"
+                        :class="activeTab===index ? 'text-green-500 border-green-500' : ''" @click="activeTab = index"
+                        x-text="tab"></li>
+                </template>
+            </ul>
+
+            <div class="p-10 text-center mx-auto border">
+                <div x-show="activeTab===0">
+                    <div class="py-3 w-full">
+                        <template x-for="(score, indexScore) in scores" :key="indexScore">
+                            <div class="flex mb-4 border bg-white shadow-lg md:h-35 h-20 ">
+                                <div class="w-7 bg-red-400 grid grid-cols-3 gap-4 content-center pl-2">
+                                    <span class="relative text-gray-700 mx-auto" x-text="indexScore+1">
+
+                                    </span>
+                                </div>
+                                <div class="w-48 polygon">
+                                    <img :src="'https://picsum.photos/id/'+(1+indexScore)+ Math.floor(Math.random()*(100-10+1)+10) +'/200/300'"
+                                        class="" alt="" loading="lazy">
+                                </div>
+                                <div class="w-full p-2">
+                                    <div class="flex justify-between ...">
+                                        <div class="md:text-base text-xs" x-text="names[indexScore]"></div>
+
+                                        <div class="md:text-base text-xs" x-text="score"></div>
+                                    </div>
+                                    <div class=' w-full md:h-full h-1/2'>
+                                        <div class='bg-red-500 w-70 h-1/2' :class="progress[indexScore]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div x-show="activeTab===1">
+                    <div class="py-3 w-full">
+                        <template x-for="(score, indexScore) in scores_two" :key="indexScore">
+                            <div class="flex mb-4 border bg-white shadow-lg md:h-35 h-20 ">
+                                <div class="w-7 bg-red-400 grid grid-cols-3 gap-4 content-center pl-2">
+                                    <span class="relative text-gray-700 mx-auto" x-text="indexScore+1">
+
+                                    </span>
+                                </div>
+                                <div class="w-48 polygon">
+                                    <img :src="'https://picsum.photos/id/'+(1+indexScore)+ Math.floor(Math.random()*(100-10+1)+10) +'/200/300'"
+                                        class="" alt="" loading="lazy">
+                                </div>
+                                <div class="w-full p-2">
+                                    <div class="flex justify-between ...">
+                                        <div class="md:text-base text-xs" x-text="names_two[indexScore]"></div>
+
+                                        <div class="md:text-base text-xs" x-text="score"></div>
+                                    </div>
+                                    <div class=' w-full md:h-full h-1/2'>
+                                        <div class='bg-red-500 w-70 h-1/2' :class="progress[indexScore]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div x-show="activeTab===2">
+                    <div class="py-3 w-full">
+                        <template x-for="(score, indexScore) in scores_three" :key="indexScore">
+                            <div class="flex mb-4 border bg-white shadow-lg md:h-35 h-20 ">
+                                <div class="w-7 bg-red-400 grid grid-cols-3 gap-4 content-center pl-2">
+                                    <span class="relative text-gray-700 mx-auto" x-text="indexScore+1">
+
+                                    </span>
+                                </div>
+                                <div class="w-48 polygon">
+                                    <img :src="'https://picsum.photos/id/'+(1+indexScore)+ Math.floor(Math.random()*(100-10+1)+10) +'/200/300'"
+                                        class="" alt="" loading="lazy">
+                                </div>
+                                <div class="w-full p-2">
+                                    <div class="flex justify-between ...">
+                                        <div class="md:text-base text-xs" x-text="names_three[indexScore]"></div>
+
+                                        <div class="md:text-base text-xs" x-text="score"></div>
+                                    </div>
+                                    <div class=' w-full md:h-full h-1/2'>
+                                        <div class='bg-red-500 w-70 h-1/2' :class="progress[indexScore]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--actual component end-->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+    <script>
+        function setup() {
+            return {
+                activeTab: 0,
+                tabs: [
+                    "Game 1",
+                    "Game 2",
+                    "Game 3",
+                ],
+                scores: [
+                    "81.219",
+                    "73.239",
+                    "68.217",
+                    "51.793",
+                    "32.871",
+                    "28.563",
+                    "21.671",
+                    "10.786",
+                    "8.189",
+                    "1.178",
+                ],
+                names: [
+                    "sandalbolonk",
+                    "dikutandi",
+                    "Sarada Kun",
+                    "Zulmy Moch Z",
+                    "Paman Budh",
+                    "Fitri Rifki",
+                    "Saipul Tomket",
+                    "Aksara Aksara",
+                    "Achrie Brim",
+                    "Jomarinne Kims",
+                ],
+                progress: [
+                    "w-full",
+                    "w-5/6",
+                    "w-5/6",
+                    "w-4/5",
+                    "w-3/4",
+                    "w-3/4",
+                    "w-2/3",
+                    "w-3/5",
+                    "w-2/5",
+                    "w-1/6",
+                ],
+                scores_two: [
+                    "91.867",
+                    "83.213",
+                    "58.873",
+                    "51.783",
+                    "42.878",
+                    "38.563",
+                    "21.673",
+                    "9.783",
+                    "3.183",
+                    "1.178",
+                ],
+                names_two: [
+                    "Zulmy Moch Z",
+                    "sandalbolonk",
+                    "Sarada Kun",
+                    "dikutandi",
+                    "Aksara Aksara",
+                    "Fitri Rifki",
+                    "Paman Budh",
+                    "Achrie Brim",
+                    "Jomarinne Kims",
+                    "Saipul Tomket",
+                ],
+
+                scores_three: [
+                    "89.123",
+                    "71.345",
+                    "61.234",
+                    "59.789",
+                    "31.876",
+                    "22.657",
+                    "21.980",
+                    "12.438",
+                    "10.111",
+                    "2.786",
+                ],
+                names_three: [
+                    "Zulmy Moch Z",
+                    "Sarada Kun",
+                    "dikutandi",
+                    "Fitri Rifki",
+                    "Aksara Aksara",
+                    "sandalbolonk",
+                    "Achrie Brim",
+                    "Jomarinne Kims",
+                    "Saipul Tomket",
+                    "Paman Budh",
+                ],
+            };
+        };
+    </script>
+
+</html>
